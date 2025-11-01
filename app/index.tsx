@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Text, View } from 'react-native';
 
 export default function Index() {
@@ -6,6 +7,11 @@ export default function Index() {
       <Text className='font-bold text-3xl text-blue-700'>
         Welcome in NativeWind!
       </Text>
+      <Button
+        variant={'primary'}
+        title='Click Me'
+        onPress={() => alert('Button Pressed!')}
+      />
     </View>
   );
 }

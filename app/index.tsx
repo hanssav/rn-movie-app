@@ -8,9 +8,9 @@ export default function Index() {
         Welcome in NativeWind!
       </Text>
       <Button
-        variant={'primary'}
         title='Click Me'
         onPress={() => alert('Button Pressed!')}
+        className='bg-red-500 mt-4' // implement cn function if needed/ customize styles
       />
     </View>
   );

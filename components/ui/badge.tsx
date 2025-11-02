@@ -6,42 +6,50 @@ import { Platform, View, ViewProps } from 'react-native';
 
 const badgeVariants = cva(
   cn(
-    'border-border group shrink-0 flex-row items-center justify-center gap-1 overflow-hidden rounded-md border px-2 py-0.5',
+    'border-gray-200 dark:border-gray-700 group shrink-0 flex-row items-center justify-center gap-1 overflow-hidden rounded-md border px-2 py-0.5',
     Platform.select({
       web: 'focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive w-fit whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] [&>svg]:pointer-events-none [&>svg]:size-3',
-    })
+    }),
   ),
   {
     variants: {
       variant: {
         default: cn(
-          'bg-primary border-transparent',
-          Platform.select({ web: '[a&]:hover:bg-primary/90' })
+          'bg-blue-600 dark:bg-blue-500 border-transparent',
+          Platform.select({
+            web: '[a&]:hover:bg-blue-700 dark:hover:bg-blue-600',
+          }),
         ),
         secondary: cn(
-          'bg-secondary border-transparent',
-          Platform.select({ web: '[a&]:hover:bg-secondary/90' })
+          'bg-gray-100 dark:bg-gray-800 border-transparent',
+          Platform.select({
+            web: '[a&]:hover:bg-gray-200 dark:hover:bg-gray-700',
+          }),
         ),
         destructive: cn(
-          'bg-destructive border-transparent',
-          Platform.select({ web: '[a&]:hover:bg-destructive/90' })
+          'bg-red-600 dark:bg-red-500 border-transparent',
+          Platform.select({
+            web: '[a&]:hover:bg-red-700 dark:hover:bg-red-600',
+          }),
         ),
-        outline: Platform.select({ web: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground' }),
+        outline: Platform.select({
+          web: '[a&]:hover:bg-accent [a&]:hover:text-accent-foreground',
+        }),
       },
     },
     defaultVariants: {
       variant: 'default',
     },
-  }
+  },
 );
 
 const badgeTextVariants = cva('text-xs font-medium', {
   variants: {
     variant: {
-      default: 'text-primary-foreground',
-      secondary: 'text-secondary-foreground',
-      destructive: 'text-white',
-      outline: 'text-foreground',
+      default: 'text-white dark:text-white',
+      secondary: 'text-gray-700 dark:text-gray-100',
+      destructive: 'text-white dark:text-white',
+      outline: 'text-gray-700 dark:text-gray-100',
     },
   },
   defaultVariants: {
@@ -58,7 +66,10 @@ function Badge({ className, variant, asChild, ...props }: BadgeProps) {
   const Component = asChild ? Slot.View : View;
   return (
     <TextClassContext.Provider value={badgeTextVariants({ variant })}>
-      <Component className={cn(badgeVariants({ variant }), className)} {...props} />
+      <Component
+        className={cn(badgeVariants({ variant }), className)}
+        {...props}
+      />
     </TextClassContext.Provider>
   );
 }

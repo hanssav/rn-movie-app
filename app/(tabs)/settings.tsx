@@ -7,14 +7,23 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import ScreenWrapper from '@/components/ui/screen-wrapper';
+import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
+import { useTheme } from '@/lib/theme-provider';
 import { useState } from 'react';
-import { Switch, View } from 'react-native';
+import { View } from 'react-native';
 
 export default function SettingsScreen() {
   const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
   const [autoPlay, setAutoPlay] = useState(true);
+
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(
+      theme === 'system' ? 'dark' : theme === 'dark' ? 'light' : 'system',
+    );
+  };
 
   return (
     <ScreenWrapper>
@@ -52,17 +61,35 @@ export default function SettingsScreen() {
                   Receive notifications about updates
                 </Text>
               </View>
-              <Switch value={notifications} onValueChange={setNotifications} />
+              <Switch
+                // value={notifications}
+                // onValueChange={setNotifications}
+                checked={notifications}
+                onCheckedChange={setNotifications}
+                id="push-notifications"
+                nativeID="push-notifications"
+              />
             </View>
 
             <View className="flex-row justify-between items-center">
               <View className="flex-1">
-                <Text className="font-medium">Dark Mode</Text>
+                <Text className="font-medium">Theme</Text>
                 <Text className="text-sm text-muted-foreground">
-                  Enable dark theme
+                  {theme === 'system'
+                    ? 'Using system theme'
+                    : theme === 'dark'
+                    ? 'Dark theme enabled'
+                    : 'Light theme enabled'}
                 </Text>
               </View>
-              <Switch value={darkMode} onValueChange={setDarkMode} />
+              <Switch
+                // value={darkMode}
+                // onValueChange={setDarkMode}
+                checked={theme === 'dark'}
+                onCheckedChange={toggleTheme}
+                id="dark-mode"
+                nativeID="dark-mode"
+              />
             </View>
 
             <View className="flex-row justify-between items-center">
@@ -72,7 +99,14 @@ export default function SettingsScreen() {
                   Automatically play videos in feed
                 </Text>
               </View>
-              <Switch value={autoPlay} onValueChange={setAutoPlay} />
+              <Switch
+                // value={autoPlay}
+                // onValueChange={setAutoPlay}
+                checked={autoPlay}
+                onCheckedChange={setAutoPlay}
+                id="play-mode"
+                nativeID="play-mode"
+              />
             </View>
           </CardContent>
         </Card>

@@ -7,8 +7,8 @@ function Card({ className, ...props }: ViewProps & React.RefAttributes<View>) {
     <TextClassContext.Provider value="text-card-foreground">
       <View
         className={cn(
-          'bg-card border-border flex flex-col gap-6 rounded-xl border py-6 shadow-sm shadow-black/5',
-          className
+          'bg-white dark:bg-card-dark/80 border-card-border dark:border-card-border-dark/60 flex flex-col gap-6 rounded-xl border py-6 backdrop-blur-md shadow shadow-black/5 dark:shadow-black/10',
+          className,
         )}
         {...props}
       />
@@ -16,8 +16,13 @@ function Card({ className, ...props }: ViewProps & React.RefAttributes<View>) {
   );
 }
 
-function CardHeader({ className, ...props }: ViewProps & React.RefAttributes<View>) {
-  return <View className={cn('flex flex-col gap-1.5 px-6', className)} {...props} />;
+function CardHeader({
+  className,
+  ...props
+}: ViewProps & React.RefAttributes<View>) {
+  return (
+    <View className={cn('flex flex-col gap-1.5 px-6', className)} {...props} />
+  );
 }
 
 function CardTitle({
@@ -38,15 +43,38 @@ function CardDescription({
   className,
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<Text>) {
-  return <Text className={cn('text-muted-foreground text-sm', className)} {...props} />;
+  return (
+    <Text
+      className={cn('text-zinc-500 dark:text-zinc-400 text-sm', className)}
+      {...props}
+    />
+  );
 }
 
-function CardContent({ className, ...props }: ViewProps & React.RefAttributes<View>) {
+function CardContent({
+  className,
+  ...props
+}: ViewProps & React.RefAttributes<View>) {
   return <View className={cn('px-6', className)} {...props} />;
 }
 
-function CardFooter({ className, ...props }: ViewProps & React.RefAttributes<View>) {
-  return <View className={cn('flex flex-row items-center px-6', className)} {...props} />;
+function CardFooter({
+  className,
+  ...props
+}: ViewProps & React.RefAttributes<View>) {
+  return (
+    <View
+      className={cn('flex flex-row items-center px-6', className)}
+      {...props}
+    />
+  );
 }
 
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+export {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+};

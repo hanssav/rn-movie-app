@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ScreenWrapperProps = {
   children: ReactNode;
@@ -12,8 +13,10 @@ export default function ScreenWrapper({
   className,
 }: ScreenWrapperProps) {
   return (
-    <ScrollView className="flex-1 bg-background">
-      <View className={cn('flex-1 pt-8 ', className)}>{children}</View>
-    </ScrollView>
+    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-[#0A0A0F]">
+      <ScrollView className="flex-1">
+        <ScrollView className={cn('flex-1', className)}>{children}</ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }

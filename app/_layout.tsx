@@ -1,41 +1,65 @@
 import '@/global.css';
 
+import React from 'react';
 import { NAV_THEME } from '@/lib/theme';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
+import { setupFocusManager, setupOnlineManager } from '@/lib/react-query-setup';
+import { QueryClientProvider } from '@tanstack/react-query';
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
 
+import { QueryClient } from '@tanstack/react-query';
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 2,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
+    },
+  },
+});
+
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();
 
+  React.useEffect(() => {
+    setupOnlineManager();
+    const cleanup = setupFocusManager();
+
+    return cleanup;
+  }, []);
+
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <StatusBar
-        style={colorScheme === 'dark' ? 'light' : 'dark'}
-        hidden={true}
-      />
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
+        <StatusBar
+          style={colorScheme === 'dark' ? 'light' : 'dark'}
+          hidden={true}
         />
-        <Stack.Screen
-          name="movie/[id]"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="movie/[id]"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+        <PortalHost />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

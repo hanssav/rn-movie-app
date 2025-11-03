@@ -62,8 +62,6 @@ export default function SettingsScreen() {
                 </Text>
               </View>
               <Switch
-                // value={notifications}
-                // onValueChange={setNotifications}
                 checked={notifications}
                 onCheckedChange={setNotifications}
                 id="push-notifications"
@@ -83,8 +81,6 @@ export default function SettingsScreen() {
                 </Text>
               </View>
               <Switch
-                // value={darkMode}
-                // onValueChange={setDarkMode}
                 checked={theme === 'dark'}
                 onCheckedChange={toggleTheme}
                 id="dark-mode"
@@ -100,8 +96,6 @@ export default function SettingsScreen() {
                 </Text>
               </View>
               <Switch
-                // value={autoPlay}
-                // onValueChange={setAutoPlay}
                 checked={autoPlay}
                 onCheckedChange={setAutoPlay}
                 id="play-mode"
@@ -140,7 +134,7 @@ export default function SettingsScreen() {
               <Text>Log Out</Text>
             </Button>
             <Button variant="outline">
-              <Text className="text-destructive">Delete Account</Text>
+              <Text>Delete Account</Text>
             </Button>
           </CardContent>
         </Card>

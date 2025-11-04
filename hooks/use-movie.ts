@@ -1,5 +1,9 @@
 import { movieService } from '@/services';
-import { DiscoverMovieParams, DiscoverResponse } from '@/types';
+import {
+  DiscoverMovieParams,
+  DiscoverResponse,
+  GetMovieDetailParams,
+} from '@/types';
 import {
   useInfiniteQuery,
   useQuery,
@@ -32,5 +36,13 @@ export const useInfiniteDiscoverMovies = (
       return undefined;
     },
     initialPageParam: 1,
+  });
+};
+
+export const useMovieId = (params: GetMovieDetailParams) => {
+  return useQuery({
+    queryKey: ['movies', params.movie_id],
+    queryFn: () => movieService.getId(params),
+    staleTime: 60_000,
   });
 };

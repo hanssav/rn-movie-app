@@ -96,3 +96,58 @@ export type DiscoverMovieParams = {
 
   year?: number;
 };
+
+// DETAIL
+
+export type Genre = {
+  id: number;
+  name: string;
+};
+
+export type ProductionCompany = {
+  id: number;
+  logo_path: string | null;
+  name: string;
+  origin_country: string;
+};
+
+export type ProductionCountry = {
+  iso_3166_1: string;
+  name: string;
+};
+
+export type SpokenLanguage = {
+  english_name: string;
+  iso_639_1: string;
+  name: string;
+};
+
+// Extend your base DiscoverResult
+export type MovieDetailResult = DiscoverResult & {
+  belongs_to_collection: null | unknown;
+  budget: number;
+  genres: Genre[];
+  homepage: string;
+  imdb_id: string | null;
+  origin_country?: string[];
+  production_companies: ProductionCompany[];
+  production_countries: ProductionCountry[];
+  runtime: number | null;
+  spoken_languages: SpokenLanguage[];
+  status: string;
+  tagline: string | null;
+};
+
+export type GetMovieDetailParams = {
+  /** The TMDB movie ID (path param) */
+  movie_id: number;
+
+  /** Optional query params */
+  query?: {
+    /** Comma-separated list of additional endpoints to include (max 20) */
+    append_to_response?: string;
+
+    /** Language code, defaults to "en-US" */
+    language?: string;
+  };
+};

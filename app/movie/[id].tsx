@@ -1,40 +1,43 @@
-import { QueryState } from '@/components/screen';
+import { MovieInfo, QueryState } from '@/components/screen';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
-import { useMovieId } from '@/hooks';
+import { movieKeys, useAddFavorite, useMovieId } from '@/hooks';
 import { icons } from '@/lib/constants/icons';
 import { cn, getSafeImage } from '@/lib/utils';
+import { movieService } from '@/services';
+import { useQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Heart } from 'lucide-react-native';
 import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 
-type MovieInfoProps = {
-  label: string;
-  value?: string | number | null;
-};
-
-const MovieInfo = ({ label, value }: MovieInfoProps) => (
-  <View className="mt-5 flex-col items-start justify-center">
-    <Text className="text-sm font-normal text-light-200">{label}</Text>
-    <Text className="mt-2 text-sm font-bold text-light-100">
-      {value || 'N/A'}
-    </Text>
-  </View>
-);
-
 const Detail = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
-
   const movieId = Array.isArray(id) ? id[0] : id;
+  const movieIdInt = parseInt(movieId);
 
   const { data, error, isLoading } = useMovieId({
-    movie_id: parseInt(movieId),
+    movie_id: movieIdInt,
     query: {
       append_to_response: 'credits,videos,images',
       language: 'en-US',
     },
   });
+
+  const { data: account_data } = useQuery({
+    queryKey: movieKeys.account_state(movieIdInt),
+    queryFn: () => movieService.accountState(movieIdInt),
+  });
+
+  const { mutate, isPending } = useAddFavorite();
+
+  const handleAddToFavorite = () => {
+    mutate({
+      media_type: 'movie',
+      media_id: movieIdInt,
+      favorite: account_data?.favorite ? false : true,
+    });
+  };
 
   return (
     <View className="flex-1">
@@ -130,8 +133,14 @@ const Detail = () => {
 
         <Button
           variant="outline"
-          className="rounded-full border border-accent p-2">
-          <Heart size={24} color="white" />
+          className="rounded-full border border-accent p-2"
+          onPress={handleAddToFavorite}
+          disabled={isPending}>
+          <Heart
+            size={24}
+            color="white"
+            fill={account_data?.favorite ? 'red' : 'transparent'}
+          />
         </Button>
       </View>
     </View>

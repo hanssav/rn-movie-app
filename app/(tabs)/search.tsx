@@ -1,5 +1,5 @@
-import { FlatList, ScrollView, View } from 'react-native';
 import React from 'react';
+import { FlatList, View } from 'react-native';
 import { Text } from '@/components/ui/text';
 import { useSearchMovie } from '@/hooks';
 import { SearchMovieParams } from '@/types';

@@ -1,5 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 
+export const account_id = 22381243;
+
 export const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_TMDB_API,
   headers: {

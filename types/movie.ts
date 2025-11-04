@@ -169,3 +169,33 @@ export type SearchMovieParams = {
   region?: string;
   year?: string;
 };
+
+// ADD FAVORITE
+
+export type AddFavoriteBodyParams = {
+  media_type: string;
+  media_id: number;
+  favorite: boolean;
+};
+
+export type AddFavoriteathParams = {
+  account_id: number; // required
+};
+
+export type AddFavoriteQueryParams = {
+  session_id?: string;
+};
+
+export type AddFavoriteResponse = {
+  status_code: number;
+  status_message: string;
+};
+
+// ACCOUNT
+
+export type AccountStateResponse = {
+  id: number;
+  favorite: boolean;
+  rated: boolean | { value: number };
+  watchlist: boolean;
+};

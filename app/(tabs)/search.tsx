@@ -7,9 +7,8 @@ import { Image } from 'react-native';
 import { images } from '@/lib/constants/images';
 import { Input } from '@/components/ui/input';
 import { Search as SearchIcon } from 'lucide-react-native';
-import MovieCard from '@/components/screen/movie-card';
 import { icons } from '@/lib/constants/icons';
-import { QueryState } from '@/components/screen/query-state';
+import { QueryState, MovieCard } from '@/components/screen';
 
 const Search = () => {
   const [searchText, setSearchText] = React.useState<string>('');

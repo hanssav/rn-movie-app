@@ -1,4 +1,4 @@
-import { QueryState } from '@/components/screen/query-state';
+import { QueryState } from '@/components/screen';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { useMovieId } from '@/hooks';

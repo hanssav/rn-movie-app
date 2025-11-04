@@ -12,7 +12,7 @@ type QueryStateProps = {
   CustomError?: React.ReactNode;
 };
 
-export const QueryState: React.FC<QueryStateProps> = ({
+const QueryState: React.FC<QueryStateProps> = ({
   loading,
   error,
   loaderHeight = 200,
@@ -45,6 +45,7 @@ export const QueryState: React.FC<QueryStateProps> = ({
   return <>{children}</>;
 };
 
+export default QueryState;
 // <QueryState
 //   loading={isLoading || isPopularLoading}
 //   error={error?.message || errorPopular?.message}>

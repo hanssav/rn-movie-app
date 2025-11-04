@@ -1,6 +1,5 @@
-import MovieCard from '@/components/screen/movie-card';
-import PopularCarousel from '@/components/screen/popular-card';
-import { QueryState } from '@/components/screen/query-state';
+import React from 'react';
+import { MovieCard, QueryState, PopularCarousel } from '@/components/screen';
 import { Input } from '@/components/ui/input';
 import { LoadingSpinner } from '@/components/ui/loading';
 import { Text } from '@/components/ui/text';
@@ -9,8 +8,7 @@ import { icons } from '@/lib/constants/icons';
 import { images } from '@/lib/constants/images';
 import { useRouter } from 'expo-router';
 import { Search } from 'lucide-react-native';
-import React from 'react';
-import { FlatList, Image, ImageBackground, View } from 'react-native';
+import { FlatList, Image, View } from 'react-native';
 
 const Screen = () => {
   const router = useRouter();
@@ -41,7 +39,7 @@ const Screen = () => {
   const renderHeader = () => (
     <>
       {/* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS .flex-items-justify-center : check in global.css for how to setting this variable   */}
-      <View className="flex-all-center min-h-72 gap-12 px-4">
+      <View className="flex-all-center min-h-72 w-full gap-12">
         <Image source={icons.logo} className="h-10 w-12" />
 
         <Input

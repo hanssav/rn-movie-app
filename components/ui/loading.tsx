@@ -8,7 +8,7 @@ type LoadingSpinnerProps = {
 
 export const LoadingSpinner = ({
   size = 'large',
-  color = '#0000ff',
+  color = '#AB8BFF',
 }: LoadingSpinnerProps) => {
   return <ActivityIndicator size={size} color={color} />;
 };

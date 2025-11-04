@@ -136,6 +136,7 @@ export type MovieDetailResult = DiscoverResult & {
   spoken_languages: SpokenLanguage[];
   status: string;
   tagline: string | null;
+  revenue: number;
 };
 
 export type GetMovieDetailParams = {

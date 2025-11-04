@@ -1,73 +1,69 @@
 import MovieCard from '@/components/screen/movie-card';
 import PopularCarousel from '@/components/screen/popular-card';
+import { QueryState } from '@/components/screen/query-state';
 import { Input } from '@/components/ui/input';
 import { LoadingSpinner } from '@/components/ui/loading';
 import { Text } from '@/components/ui/text';
-import { useInfiniteDiscoverMovies } from '@/hooks';
+import { useDiscoverMovies, useInfiniteDiscoverMovies } from '@/hooks';
 import { icons } from '@/lib/constants/icons';
 import { images } from '@/lib/constants/images';
+import { useRouter } from 'expo-router';
 import { Search } from 'lucide-react-native';
 import React from 'react';
 import { FlatList, Image, ImageBackground, View } from 'react-native';
 
 const Screen = () => {
+  const router = useRouter();
   const {
     data,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    isError,
     error,
   } = useInfiniteDiscoverMovies({
-    sort_by: 'popularity.desc',
+    sort_by: 'vote_average.desc',
     language: 'en-US',
   });
-
   const movies = data?.pages.flatMap((page) => page.results) ?? [];
-  console.log('Movies Count:', movies.length);
+
+  const {
+    data: popularMovies,
+    isLoading: isPopularLoading,
+    error: errorPopular,
+  } = useDiscoverMovies({
+    language: 'en-US',
+    sort_by: 'popularity.desc',
+    page: 1,
+  });
+  const popular = popularMovies?.results || [];
 
   const renderHeader = () => (
     <>
-      <View className="flex min-h-80 items-center justify-center gap-12 px-4">
+      {/* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS .flex-items-justify-center : check in global.css for how to setting this variable   */}
+      <View className="flex-items-justify-center min-h-80 gap-12 px-4">
         <Image source={icons.logo} className="h-10 w-12" />
 
         <Input
           placeholder="Search through 300+ movies online"
           iconLeft={<Search size={20} color="#AB8BFF" />}
+          onPressIn={() => router.push('/(tabs)/search')}
         />
       </View>
+      <QueryState
+        loading={isLoading || isPopularLoading}
+        error={error?.message || errorPopular?.message}>
+        <View className="mt-5">
+          <View className="mb-5 mt-5">
+            <Text variant={'title'}>Popular Now</Text>
+            <PopularCarousel movies={popular} />
+          </View>
 
-      <View className="mt-5">
-        <View className="mb-5 mt-5">
-          <Text className="mb-3 text-lg font-bold text-white">Popular Now</Text>
-          <PopularCarousel movies={movies} />
+          <Text variant={'title'}>Latest Movies</Text>
         </View>
-
-        <Text className="mb-3 text-lg font-bold text-white">Latest Movies</Text>
-      </View>
+      </QueryState>
     </>
   );
-
-  if (isLoading) {
-    return (
-      <ImageBackground source={images.bg} className="flex-1" resizeMode="cover">
-        <View className="flex-1 items-center justify-center">
-          <LoadingSpinner />
-        </View>
-      </ImageBackground>
-    );
-  }
-
-  if (isError) {
-    return (
-      <ImageBackground source={images.bg} className="flex-1" resizeMode="cover">
-        <View className="flex-1 items-center justify-center px-5">
-          <Text variant={'error'}>Error: {error.message}</Text>
-        </View>
-      </ImageBackground>
-    );
-  }
 
   return (
     <ImageBackground source={images.bg} className="flex-1" resizeMode="cover">
@@ -77,13 +73,7 @@ const Screen = () => {
         renderItem={({ item }) => <MovieCard movie={item} />}
         numColumns={3}
         ListHeaderComponent={renderHeader}
-        ListFooterComponent={
-          isFetchingNextPage ? (
-            <View className="py-4">
-              <LoadingSpinner />
-            </View>
-          ) : null
-        }
+        ListFooterComponent={isFetchingNextPage ? <LoadingSpinner /> : null}
         contentContainerStyle={{
           paddingHorizontal: 20,
           paddingBottom: 20,

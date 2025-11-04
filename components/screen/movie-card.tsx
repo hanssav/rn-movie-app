@@ -3,27 +3,12 @@ import { View, Text, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { getSafeImage } from '@/lib/utils';
+import { DiscoverResult } from '@/types';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = (width - 60) / 3;
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  overview: string;
-  vote_average: number;
-  release_date: string;
-  genre_ids?: number[];
-}
-
-interface MovieCardProps {
-  movie: Movie;
-  onPress?: (movie: Movie) => void;
-}
-
-export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
+export const MovieCard: React.FC<{ movie: DiscoverResult }> = ({ movie }) => {
   const router = useRouter();
   const imageUrl = getSafeImage(movie.poster_path);
   const rating = movie.vote_average.toFixed(1);
@@ -49,6 +34,16 @@ export const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress }) => {
           source={{ uri: imageUrl }}
           className="h-52 w-full"
           resizeMode="cover"
+        />
+        <LinearGradient
+          colors={['transparent', 'rgba(0,0,0,0.8)']}
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 100,
+          }}
         />
       </View>
 

@@ -9,25 +9,15 @@ import {
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
-import { getSafeImage } from '@/lib/utils';
+import { cn, getSafeImage } from '@/lib/utils';
+import { DiscoverResult } from '@/types';
 
 const { width } = Dimensions.get('window');
 const CAROUSEL_ITEM_WIDTH = width * 0.7;
 
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  backdrop_path: string | null;
-  vote_average: number;
-  release_date: string;
-}
-
-interface PopularCarouselProps {
-  movies: Movie[];
-}
-
-export const PopularCarousel: React.FC<PopularCarouselProps> = ({ movies }) => {
+export const PopularCarousel: React.FC<{ movies: DiscoverResult[] }> = ({
+  movies,
+}) => {
   const router = useRouter();
 
   const handlePress = (movieId: number) => {
@@ -37,7 +27,7 @@ export const PopularCarousel: React.FC<PopularCarouselProps> = ({ movies }) => {
     });
   };
 
-  const renderItem = ({ item }: { item: Movie }) => {
+  const renderItem = ({ item }: { item: DiscoverResult }) => {
     const imageUrl = getSafeImage(item.backdrop_path || item.poster_path);
     const rating = item.vote_average.toFixed(1);
 
@@ -49,7 +39,7 @@ export const PopularCarousel: React.FC<PopularCarouselProps> = ({ movies }) => {
       <TouchableOpacity
         onPress={() => handlePress(item.id)}
         activeOpacity={0.9}
-        style={{ width: CAROUSEL_ITEM_WIDTH, marginRight: 16 }}>
+        style={{ width: CAROUSEL_ITEM_WIDTH }}>
         <View className="overflow-hidden rounded-2xl bg-gray-900">
           <Image
             source={{ uri: imageUrl }}
@@ -93,10 +83,10 @@ export const PopularCarousel: React.FC<PopularCarouselProps> = ({ movies }) => {
     <FlatList
       data={movies.slice(0, 10)}
       keyExtractor={(item) => `popular-${item.id}`}
+      ItemSeparatorComponent={() => <View className={cn('mx-2')} />}
       renderItem={renderItem}
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={{ paddingRight: 20 }}
       snapToInterval={CAROUSEL_ITEM_WIDTH + 16}
       decelerationRate="fast"
       snapToAlignment="start"

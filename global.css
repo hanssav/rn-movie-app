@@ -57,3 +57,10 @@
     --chart-5: 340 75% 55%;
   }
 }
+
+/* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS */
+@layer components {
+  .flex-items-justify-center {
+    @apply flex items-center justify-center;
+  }
+}

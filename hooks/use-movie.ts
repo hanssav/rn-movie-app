@@ -4,6 +4,7 @@ import {
   DiscoverResponse,
   GetMovieDetailParams,
   MovieDetailResult,
+  SearchMovieParams,
 } from '@/types';
 import {
   useInfiniteQuery,
@@ -45,5 +46,20 @@ export const useMovieId = (params: GetMovieDetailParams) => {
     queryKey: ['movies', params.movie_id],
     queryFn: () => movieService.getId(params),
     staleTime: 60_000,
+  });
+};
+
+export const useSearchMovie = (params: Omit<SearchMovieParams, 'page'>) => {
+  return useInfiniteQuery({
+    queryKey: ['movies', 'search', params],
+    queryFn: ({ pageParam = 1 }) =>
+      movieService.seerch({ ...params, page: pageParam }),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
   });
 };

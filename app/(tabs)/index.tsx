@@ -41,7 +41,7 @@ const Screen = () => {
   const renderHeader = () => (
     <>
       {/* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS .flex-items-justify-center : check in global.css for how to setting this variable   */}
-      <View className="flex-items-justify-center min-h-80 gap-12 px-4">
+      <View className="flex-all-center min-h-72 gap-12 px-4">
         <Image source={icons.logo} className="h-10 w-12" />
 
         <Input
@@ -66,7 +66,12 @@ const Screen = () => {
   );
 
   return (
-    <ImageBackground source={images.bg} className="flex-1" resizeMode="cover">
+    <>
+      <Image
+        source={images.bg}
+        className="absolute z-0 w-full flex-1"
+        resizeMode="cover"
+      />
       <FlatList
         data={movies}
         keyExtractor={(item) => item.id.toString()}
@@ -90,7 +95,7 @@ const Screen = () => {
         }}
         onEndReachedThreshold={0.5}
       />
-    </ImageBackground>
+    </>
   );
 };
 

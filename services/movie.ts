@@ -4,6 +4,8 @@ import {
   DiscoverResponse,
   GetMovieDetailParams,
   MovieDetailResult,
+  SearchMovieParams,
+  SearchMovieResponse,
 } from '@/types';
 
 export const movieService = {
@@ -17,6 +19,14 @@ export const movieService = {
     const response = await apiService.get<MovieDetailResult>(
       `/movie/${params.movie_id}`
     );
+    return response;
+  },
+  seerch: async (params: SearchMovieParams): Promise<SearchMovieResponse> => {
+    const response = await apiService.get<SearchMovieResponse>(
+      '/search/movie',
+      { params }
+    );
+
     return response;
   },
 };

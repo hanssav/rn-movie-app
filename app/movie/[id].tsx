@@ -51,7 +51,7 @@ const Detail = () => {
           <TouchableOpacity
             className={cn(
               'absolute bottom-0 right-5 size-14 translate-y-1/2',
-              'flex-items-justify-center rounded-full bg-white'
+              'flex-all-center rounded-full bg-white'
             )}>
             <Image
               source={icons.play}
@@ -120,8 +120,12 @@ const Detail = () => {
           variant={'ghost'}
           onPress={() => router.back()}
           className="flex flex-1 flex-row items-center justify-center bg-accent">
-          <Text className="text-dark-200">Visit Hoempage</Text>
-          <Image source={icons.arrow} className="size-5" tintColor="#1a1a1a" />
+          <Image
+            source={icons.arrow}
+            className="size-5 rotate-180"
+            tintColor="#1a1a1a"
+          />
+          <Text className="text-dark-200">Go Back</Text>
         </Button>
 
         <Button

@@ -60,7 +60,7 @@
 
 /* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS */
 @layer components {
-  .flex-items-justify-center {
+  .flex-all-center {
     @apply flex items-center justify-center;
   }
 }

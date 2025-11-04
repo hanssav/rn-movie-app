@@ -152,3 +152,20 @@ export type GetMovieDetailParams = {
     language?: string;
   };
 };
+
+// SEARCH MOVIE TYPE
+
+// ✅ Reuse existing Discover types
+export type SearchMovieResult = DiscoverResult;
+export type SearchMovieResponse = DiscoverResponse;
+
+// ✅ Search movie params
+export type SearchMovieParams = {
+  query: string; // required
+  include_adult?: boolean;
+  language?: string;
+  primary_release_year?: string;
+  page?: number;
+  region?: string;
+  year?: string;
+};

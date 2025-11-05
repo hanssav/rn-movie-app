@@ -199,3 +199,20 @@ export type AccountStateResponse = {
   rated: boolean | { value: number };
   watchlist: boolean;
 };
+
+// Get All Favorit
+
+export type AllFavoriteParams = {
+  account_id: number;
+};
+
+export type AllFavoriteQueryParams = {
+  language?: string; // default en-US
+  page?: number; // default 1
+  session_id?: string; // required
+  sort_by?: 'created_at.asc' | 'created_at.desc';
+};
+
+export type AllFavoriteMovieResult = DiscoverResult;
+
+export type AllFavoriteMovieResponse = DiscoverResponse;

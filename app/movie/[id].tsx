@@ -2,13 +2,12 @@ import { MovieInfo, QueryState } from '@/components/screen';
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
 import { movieKeys, useAddFavorite, useMovieId } from '@/hooks';
-import { icons } from '@/lib/constants/icons';
 import { cn, getSafeImage } from '@/lib/utils';
 import { movieService } from '@/services';
 import { useQuery } from '@tanstack/react-query';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Heart } from 'lucide-react-native';
-import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
+import { ArrowLeft, Heart, Play, Star } from 'lucide-react-native';
+import { Image, ScrollView, View } from 'react-native';
 
 const Detail = () => {
   const router = useRouter();
@@ -50,20 +49,15 @@ const Detail = () => {
             className="h-[557px] w-full"
             resizeMode="cover"
           />
-
-          <TouchableOpacity
+          <Button
+            variant={'ghost'}
             className={cn(
               'absolute bottom-0 right-5 size-14 translate-y-1/2',
-              'flex-all-center rounded-full bg-white'
+              'flex-all-center rounded-full bg-accent'
             )}>
-            <Image
-              source={icons.play}
-              className="ml-1 h-7 w-6"
-              resizeMode="stretch"
-            />
-          </TouchableOpacity>
+            <Play size={30} color={'white'} fill={'white'} />
+          </Button>
         </View>
-
         <QueryState
           loading={isLoading}
           error={error?.message}
@@ -78,25 +72,20 @@ const Detail = () => {
               </View>
               <Text> </Text>
             </View>
-
             <View className="mt-2 flex-row items-center gap-x-1 rounded-md bg-dark-100 px-2 py-1">
-              <Image source={icons.star} className="size-4" />
-
+              <Star size={16} color="#FFD700" fill="#FFD700" strokeWidth={0} />
               <Text className="text-sm font-bold text-white">
                 {Math.round(data?.vote_average ?? 0)}/10
               </Text>
-
               <Text className="text-sm text-light-200">
                 ({data?.vote_count} votes)
               </Text>
             </View>
-
             <MovieInfo label="Overview" value={data?.overview} />
             <MovieInfo
               label="Genres"
               value={data?.genres?.map((g) => g.name).join(' • ') || 'N/A'}
             />
-
             <View className="flex w-1/2 flex-row justify-between">
               <MovieInfo
                 label="Budget"
@@ -107,7 +96,6 @@ const Detail = () => {
                 value={`$${Math.round((data?.revenue ?? 0) / 1_000_000)} million`}
               />
             </View>
-
             <MovieInfo
               label="Production Companies"
               value={
@@ -123,14 +111,9 @@ const Detail = () => {
           variant={'ghost'}
           onPress={() => router.back()}
           className="flex flex-1 flex-row items-center justify-center bg-accent">
-          <Image
-            source={icons.arrow}
-            className="size-5 rotate-180"
-            tintColor="#1a1a1a"
-          />
+          <ArrowLeft size={20} color="#1a1a1a" strokeWidth={2} />
           <Text className="text-dark-200">Go Back</Text>
         </Button>
-
         <Button
           variant="outline"
           className="rounded-full border border-accent p-2"

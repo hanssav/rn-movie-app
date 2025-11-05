@@ -3,6 +3,7 @@ import { movieService } from '@/services';
 import {
   AddFavoriteBodyParams,
   AddFavoriteResponse,
+  AllFavoriteQueryParams,
   DiscoverMovieParams,
   DiscoverResponse,
   GetMovieDetailParams,
@@ -16,12 +17,16 @@ import {
   UseQueryOptions,
 } from '@tanstack/react-query';
 
+const accountId = account_id;
+
 export const movieKeys = {
   discover: (params: DiscoverMovieParams) =>
     ['movies', 'discover', params] as const,
   id: (movie_id: number) => ['movies', movie_id] as const,
   search: (params: SearchMovieParams) => ['movies', 'search', params] as const,
   account_state: (movie_id: number) => ['account_state', movie_id] as const,
+  all_favorite: (params?: Omit<AllFavoriteQueryParams, 'page'>) =>
+    ['all_favorite', accountId, params] as const,
 };
 
 export const useDiscoverMovies = (
@@ -82,8 +87,6 @@ type MutationContext = {
 };
 
 export const useAddFavorite = () => {
-  const accountId = account_id;
-
   return useMutation<
     AddFavoriteResponse,
     Error,
@@ -138,6 +141,30 @@ export const useAddFavorite = () => {
       context.client.invalidateQueries({
         queryKey: movieKeys.account_state(variables.media_id),
       });
+
+      context.client.invalidateQueries({
+        queryKey: movieKeys.all_favorite(),
+      });
     },
+  });
+};
+
+export const useAllFavorite = (
+  params?: Omit<AllFavoriteQueryParams, 'page'>
+) => {
+  return useInfiniteQuery({
+    queryKey: movieKeys.all_favorite(params),
+
+    queryFn: ({ pageParam = 1 }) =>
+      movieService.allFavorite(accountId, { ...params, page: pageParam }),
+
+    getNextPageParam: (lastPage) => {
+      if (lastPage.page < lastPage.total_pages) {
+        return lastPage.page + 1;
+      }
+      return undefined;
+    },
+    staleTime: 60_000,
+    initialPageParam: 1,
   });
 };

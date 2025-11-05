@@ -3,6 +3,9 @@ import {
   AccountStateResponse,
   AddFavoriteBodyParams,
   AddFavoriteResponse,
+  AllFavoriteMovieResponse,
+  AllFavoriteParams,
+  AllFavoriteQueryParams,
   DiscoverMovieParams,
   DiscoverResponse,
   GetMovieDetailParams,
@@ -47,5 +50,14 @@ export const movieService = {
     );
     return response;
   },
-  allFavorite: async () => {},
+  allFavorite: async (
+    account_id: AllFavoriteParams['account_id'],
+    params: AllFavoriteQueryParams
+  ): Promise<AllFavoriteMovieResponse> => {
+    const response = await apiService.get<AllFavoriteMovieResponse>(
+      `/account/${account_id}/favorite/movies`,
+      { params }
+    );
+    return response;
+  },
 };

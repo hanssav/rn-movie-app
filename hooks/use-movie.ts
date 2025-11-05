@@ -143,8 +143,19 @@ export const useAddFavorite = () => {
       });
 
       context.client.invalidateQueries({
-        queryKey: movieKeys.all_favorite(),
+        queryKey: ['all_favorite'],
+        exact: false, //invalidate all prefix
       });
+
+      // We can use it too, but it's just for both sort
+
+      // context.client.invalidateQueries({
+      //   queryKey: movieKeys.all_favorite({ sort_by: 'created_at.asc' }),
+      // });
+
+      // context.client.invalidateQueries({
+      //   queryKey: movieKeys.all_favorite({ sort_by: 'created_at.desc' }),
+      // });
     },
   });
 };

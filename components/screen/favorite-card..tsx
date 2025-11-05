@@ -79,7 +79,7 @@ const FavoriteCard = ({
                     {movie.release_date?.split('-')[0] || 'N/A'}
                   </Text>
                 </View>
-                {movie.vote_count && (
+                {typeof movie.vote_count === 'number' && (
                   <Text className="text-xs text-light-200">
                     {movie.vote_count.toLocaleString()} votes
                   </Text>
@@ -107,7 +107,6 @@ const FavoriteCard = ({
               )}
             </TouchableOpacity>
           </View>
-
           {movie.genre_ids && movie.genre_ids.length > 0 && (
             <View className="mt-3 flex-row flex-wrap gap-1.5">
               {movie.genre_ids
@@ -129,7 +128,7 @@ const FavoriteCard = ({
             {movie.overview || 'No description available for this movie.'}
           </Text>
           <View className="mt-3 flex-row items-center gap-3">
-            {(movie.popularity || movie.original_language) && (
+            {typeof movie.popularity === 'number' && (
               <View className="flex-row items-center gap-1">
                 <View className="size-1.5 rounded-full bg-accent" />
                 <Text className="text-[10px] text-light-200">

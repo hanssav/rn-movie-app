@@ -14,7 +14,6 @@ const Detail = () => {
   const { id } = useLocalSearchParams();
   const movieId = Array.isArray(id) ? id[0] : id;
   const movieIdInt = parseInt(movieId);
-
   const { data, error, isLoading } = useMovieId({
     movie_id: movieIdInt,
     query: {
@@ -41,27 +40,27 @@ const Detail = () => {
   return (
     <View className="flex-1">
       <ScrollView style={{ marginBottom: 80 }}>
-        <View>
-          <Image
-            source={{
-              uri: getSafeImage(data?.poster_path),
-            }}
-            className="h-[557px] w-full"
-            resizeMode="cover"
-          />
-          <Button
-            variant={'ghost'}
-            className={cn(
-              'absolute bottom-0 right-5 size-14 translate-y-1/2',
-              'flex-all-center rounded-full bg-accent'
-            )}>
-            <Play size={30} color={'white'} fill={'white'} />
-          </Button>
-        </View>
         <QueryState
           loading={isLoading}
           error={error?.message}
-          loaderHeight={400}>
+          loaderHeight={1000}>
+          <View>
+            <Image
+              source={{
+                uri: getSafeImage(data?.poster_path),
+              }}
+              className="h-[557px] w-full"
+              resizeMode="cover"
+            />
+            <Button
+              variant={'ghost'}
+              className={cn(
+                'absolute bottom-0 right-5 size-14 translate-y-1/2',
+                'flex-all-center rounded-full bg-accent'
+              )}>
+              <Play size={30} color={'white'} fill={'white'} />
+            </Button>
+          </View>
           <View className="flex items-start p-5">
             <View className="space-y-4">
               <View className="space-y-1.5">
@@ -70,7 +69,6 @@ const Detail = () => {
                   {data?.release_date?.split('-')[0]} • PG-13 • {data?.runtime}m
                 </Text>
               </View>
-              <Text> </Text>
             </View>
             <View className="mt-2 flex-row items-center gap-x-1 rounded-md bg-dark-100 px-2 py-1">
               <Star size={16} color="#FFD700" fill="#FFD700" strokeWidth={0} />
@@ -114,17 +112,19 @@ const Detail = () => {
           <ArrowLeft size={20} color="#1a1a1a" strokeWidth={2} />
           <Text className="text-dark-200">Go Back</Text>
         </Button>
-        <Button
-          variant="outline"
-          className="rounded-full border border-accent p-2"
-          onPress={handleAddToFavorite}
-          disabled={isPending}>
-          <Heart
-            size={24}
-            color="white"
-            fill={account_data?.favorite ? 'red' : 'transparent'}
-          />
-        </Button>
+        {!isLoading && (
+          <Button
+            variant="outline"
+            className="rounded-full border border-accent p-2"
+            onPress={handleAddToFavorite}
+            disabled={isPending}>
+            <Heart
+              size={24}
+              color="white"
+              fill={account_data?.favorite ? 'red' : 'transparent'}
+            />
+          </Button>
+        )}
       </View>
     </View>
   );

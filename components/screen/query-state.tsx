@@ -15,7 +15,7 @@ type QueryStateProps = {
 const QueryState: React.FC<QueryStateProps> = ({
   loading,
   error,
-  loaderHeight = 200,
+  loaderHeight = 300,
   children,
   CustomLoader,
   CustomError,

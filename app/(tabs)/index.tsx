@@ -53,7 +53,7 @@ const Screen = () => {
         error={error?.message || errorPopular?.message}>
         <View className="mt-5">
           <View className="mb-5 mt-5">
-            <Text variant={'title'}>Popular Now</Text>
+            <Text variant={'title'}>Popular Movies</Text>
             <PopularCarousel movies={popular} />
           </View>
 

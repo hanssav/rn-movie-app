@@ -1,7 +1,7 @@
 import { FlatList, View, ActivityIndicator } from 'react-native';
 import React from 'react';
 import { Text } from '@/components/ui/text';
-import { useAllFavorite, useAddFavorite } from '@/hooks';
+import { useAllFavorite, useAddFavorite, movieKeys } from '@/hooks';
 import { AllFavoriteQueryParams } from '@/types';
 import { Heart, ChevronDown } from 'lucide-react-native';
 import {
@@ -13,8 +13,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { FavoriteCard, QueryState } from '@/components/screen';
 import { cn } from '@/lib/utils';
+import { useQueryClient } from '@tanstack/react-query';
 
 const Favorite = () => {
+  const queryClient = useQueryClient();
   const [params, setParams] = React.useState<
     Omit<AllFavoriteQueryParams, 'page'>
   >({
@@ -46,6 +48,9 @@ const Favorite = () => {
       },
       {
         onSettled: () => {
+          queryClient.invalidateQueries({
+            queryKey: movieKeys.all_favorite(params),
+          });
           setRemovingId(null);
         },
       }
@@ -112,7 +117,10 @@ const Favorite = () => {
             <Text variant="title" className="text-3xl font-black text-white">
               Favorite Movies
             </Text>
-            <QueryState loading={isLoading} error={error?.message}>
+            <QueryState
+              loading={isLoading}
+              error={error?.message}
+              loaderHeight={700}>
               <Text className="mb-6 mt-2 text-sm text-light-200">
                 {favorites.length} {favorites.length === 1 ? 'movie' : 'movies'}{' '}
                 in your collection

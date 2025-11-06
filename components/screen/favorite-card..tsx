@@ -4,7 +4,6 @@ import { Text } from '../ui/text';
 import { getSafeImage } from '@/lib/utils';
 import { Heart, Star } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
-import { icons } from '@/lib/constants/icons';
 import { Spin } from '../ui/spin';
 
 type FavoriteCardProps = {

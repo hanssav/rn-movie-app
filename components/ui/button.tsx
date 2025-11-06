@@ -18,9 +18,9 @@ const buttonVariants = cva(
           Platform.select({ web: 'hover:bg-primary/90' })
         ),
         destructive: cn(
-          'bg-destructive shadow-sm shadow-black/5 active:bg-destructive/90 dark:bg-destructive/60',
+          'border border-red-500/30 bg-red-500/10 active:bg-red-500/20',
           Platform.select({
-            web: 'hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
+            web: 'hover:bg-red-500/20 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40',
           })
         ),
         outline: cn(
@@ -38,6 +38,10 @@ const buttonVariants = cva(
           Platform.select({ web: 'hover:bg-accent dark:hover:bg-accent/50' })
         ),
         link: '',
+        card: cn(
+          'rounded-xl bg-dark-100 active:bg-dark-100/80',
+          Platform.select({ web: 'hover:bg-dark-100/80' })
+        ),
       },
       size: {
         default: cn(
@@ -53,6 +57,7 @@ const buttonVariants = cva(
           Platform.select({ web: 'has-[>svg]:px-4' })
         ),
         icon: 'h-10 w-10 sm:h-9 sm:w-9',
+        full: 'p-4',
       },
     },
     defaultVariants: {
@@ -71,7 +76,7 @@ const buttonTextVariants = cva(
     variants: {
       variant: {
         default: 'text-primary-foreground',
-        destructive: 'text-white',
+        destructive: 'font-bold text-red-500',
         outline: cn(
           'group-active:text-accent-foreground',
           Platform.select({ web: 'group-hover:text-accent-foreground' })
@@ -84,12 +89,14 @@ const buttonTextVariants = cva(
             web: 'underline-offset-4 hover:underline group-hover:underline',
           })
         ),
+        card: 'font-semibold text-white',
       },
       size: {
         default: '',
         sm: '',
         lg: '',
         icon: '',
+        full: '',
       },
     },
     defaultVariants: {

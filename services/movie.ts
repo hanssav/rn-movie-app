@@ -1,5 +1,8 @@
 import { apiService } from '@/lib/api';
 import {
+  AccountDetailsPathParams,
+  AccountDetailsQueryParams,
+  AccountDetailsResponse,
   AccountStateResponse,
   AddFavoriteBodyParams,
   AddFavoriteResponse,
@@ -56,6 +59,16 @@ export const movieService = {
   ): Promise<AllFavoriteMovieResponse> => {
     const response = await apiService.get<AllFavoriteMovieResponse>(
       `/account/${account_id}/favorite/movies`,
+      { params }
+    );
+    return response;
+  },
+  accountDetail: async (
+    account_id: AccountDetailsPathParams['account_id'],
+    params?: AccountDetailsQueryParams
+  ): Promise<AccountDetailsResponse> => {
+    const response = await apiService.get<AccountDetailsResponse>(
+      `/account/${account_id}`,
       { params }
     );
     return response;

@@ -191,7 +191,7 @@ export type AddFavoriteResponse = {
   status_message: string;
 };
 
-// ACCOUNT
+// ACCOUNT_STATE FOR CHECK IS FAVORITE
 
 export type AccountStateResponse = {
   id: number;
@@ -216,3 +216,30 @@ export type AllFavoriteQueryParams = {
 export type AllFavoriteMovieResult = DiscoverResult;
 
 export type AllFavoriteMovieResponse = DiscoverResponse;
+
+// ACCOUNT DETAILS
+
+export type AccountDetailsPathParams = {
+  account_id: number;
+};
+
+export type AccountDetailsQueryParams = {
+  session_id: string;
+};
+
+export type AccountDetailsResponse = {
+  avatar: {
+    gravatar: {
+      hash: string;
+    };
+    tmdb: {
+      avatar_path: string | null;
+    };
+  };
+  id: number;
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  include_adult: boolean;
+  username: string;
+};

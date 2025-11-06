@@ -7,10 +7,13 @@ const tmdbImgLink =
 const dummyImage =
   'https://dummyimage.com/500x750/cccccc/000000&text=No+Image  ';
 
+const dummyAvatar = 'https://api.dicebear.com/7.x/avataaars/png?seed=YouMe';
+
 export const images = {
   bg,
   highlight,
   rankingGradient,
   tmdbImgLink,
   dummyImage,
+  dummyAvatar,
 };

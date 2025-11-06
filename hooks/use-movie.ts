@@ -1,6 +1,7 @@
 import { account_id } from '@/lib/api';
 import { movieService } from '@/services';
 import {
+  AccountDetailsQueryParams,
   AddFavoriteBodyParams,
   AddFavoriteResponse,
   AllFavoriteQueryParams,
@@ -27,6 +28,11 @@ export const movieKeys = {
   account_state: (movie_id: number) => ['account_state', movie_id] as const,
   all_favorite: (params?: Omit<AllFavoriteQueryParams, 'page'>) =>
     ['all_favorite', accountId, params] as const,
+  account_detail: (params?: AccountDetailsQueryParams) => [
+    'account_detail',
+    params,
+    accountId,
+  ],
 };
 
 export const useDiscoverMovies = (
@@ -177,5 +183,13 @@ export const useAllFavorite = (
     },
     staleTime: 60_000,
     initialPageParam: 1,
+  });
+};
+
+export const useAcoountDetail = (params?: AccountDetailsQueryParams) => {
+  return useQuery({
+    queryKey: movieKeys.account_detail(params),
+    queryFn: () => movieService.accountDetail(accountId, params),
+    staleTime: 60_000,
   });
 };

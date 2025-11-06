@@ -1,10 +1,12 @@
 import { MovieInfo, QueryState } from '@/components/screen';
 import { Button } from '@/components/ui/button';
+import { Spin } from '@/components/ui/spin';
 import { Text } from '@/components/ui/text';
 import { movieKeys, useAddFavorite, useMovieId } from '@/hooks';
 import { cn, getSafeImage } from '@/lib/utils';
 import { movieService } from '@/services';
 import { useQuery } from '@tanstack/react-query';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ArrowLeft, Heart, Play, Star } from 'lucide-react-native';
 import { Image, ScrollView, View } from 'react-native';
@@ -106,23 +108,43 @@ const Detail = () => {
       </ScrollView>
       <View className="absolute bottom-5 left-0 right-0 z-50 mx-5 flex-row gap-4">
         <Button
-          variant={'ghost'}
           onPress={() => router.back()}
-          className="flex flex-1 flex-row items-center justify-center bg-accent">
-          <ArrowLeft size={20} color="#1a1a1a" strokeWidth={2} />
-          <Text className="text-dark-200">Go Back</Text>
+          className="flex-1 overflow-hidden rounded-full bg-transparent p-0">
+          <LinearGradient
+            colors={['#AB8BFF', '#8C6BEF']}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+            }}
+          />
+          <View className="flex-row items-center justify-center gap-3 px-6 py-3">
+            <ArrowLeft size={20} color="#1a1a1a" strokeWidth={2} />
+            <Text className="text-md font-semibold text-dark-200">Go Back</Text>
+          </View>
         </Button>
         {!isLoading && (
           <Button
             variant="outline"
-            className="rounded-full border border-accent p-2"
+            className={cn(
+              'min-h-[42px] min-w-[42px] rounded-full border border-accent p-2',
+              'flex-all-center'
+            )}
             onPress={handleAddToFavorite}
             disabled={isPending}>
-            <Heart
-              size={24}
-              color="white"
-              fill={account_data?.favorite ? 'red' : 'transparent'}
-            />
+            {isPending ? (
+              <Spin className="size-6 border-2 border-red-500 border-t-transparent" />
+            ) : (
+              <Heart
+                size={24}
+                color="white"
+                fill={account_data?.favorite ? 'red' : 'transparent'}
+              />
+            )}
           </Button>
         )}
       </View>

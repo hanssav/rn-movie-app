@@ -56,6 +56,12 @@ const Detail = () => {
             />
             <Button
               variant={'ghost'}
+              onPress={() => {
+                router.push({
+                  pathname: '/movie/trailer',
+                  params: { id: movieId },
+                });
+              }}
               className={cn(
                 'absolute bottom-0 right-5 size-14 translate-y-1/2',
                 'flex-all-center rounded-full bg-accent'

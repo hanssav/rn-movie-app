@@ -27,7 +27,7 @@ export const movieKeys = {
   search: (params: SearchMovieParams) => ['movies', 'search', params] as const,
   account_state: (movie_id: number) => ['account_state', movie_id] as const,
   all_favorite: (params?: Omit<AllFavoriteQueryParams, 'page'>) =>
-    ['all_favorite', accountId, params] as const,
+    ['all_favorite', account_id, params] as const,
   account_detail: (params?: AccountDetailsQueryParams) => [
     'account_detail',
     params,
@@ -140,6 +140,7 @@ export const useAddFavorite = () => {
 
     // Always refetch after error or success:
     onSettled: (data, error, variables, onMutateResult, context) => {
+      // context.client can be replace with queryClient.invalidateQueries
       context.client.invalidateQueries({
         queryKey: movieKeys.id(variables.media_id),
       });
@@ -153,7 +154,7 @@ export const useAddFavorite = () => {
         exact: false, //invalidate all prefix
       });
 
-      // We can use it too, but it's just for both sort
+      // We can use it too, but it's just for both/specific sort value
 
       // context.client.invalidateQueries({
       //   queryKey: movieKeys.all_favorite({ sort_by: 'created_at.asc' }),

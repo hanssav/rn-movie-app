@@ -243,3 +243,22 @@ export type AccountDetailsResponse = {
   include_adult: boolean;
   username: string;
 };
+
+// VIDEOS
+export type MovieVideosResponse = {
+  id: number;
+  results: MovieVideo[];
+};
+
+export type MovieVideo = {
+  iso_639_1: string;
+  iso_3166_1: string;
+  name: string;
+  key: string;
+  site: string; // YouTube, Vimeo, etc
+  size: number; // 360/720/1080
+  type: string; // Trailer, Teaser, Clip
+  official: boolean;
+  published_at: string;
+  id: string;
+};

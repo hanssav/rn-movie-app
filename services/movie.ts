@@ -13,6 +13,7 @@ import {
   DiscoverResponse,
   GetMovieDetailParams,
   MovieDetailResult,
+  MovieVideosResponse,
   SearchMovieParams,
   SearchMovieResponse,
 } from '@/types';
@@ -50,6 +51,12 @@ export const movieService = {
     const response = await apiService.post<AddFavoriteResponse>(
       `/account/${account_id}/favorite`,
       body
+    );
+    return response;
+  },
+  getVideo: async (movie_id: number): Promise<MovieVideosResponse> => {
+    const response = await apiService.get<MovieVideosResponse>(
+      `/movie/${movie_id}/videos`
     );
     return response;
   },

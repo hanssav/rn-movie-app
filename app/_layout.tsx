@@ -57,6 +57,12 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="movie/trailer"
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack>
         <PortalHost />
       </ThemeProvider>

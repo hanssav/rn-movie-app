@@ -3,7 +3,7 @@ const { hairlineWidth } = require('nativewind/theme');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
+  content: ['./app/**/*.{ts,tsx,js,jsx}', './components/**/*.{ts,tsx,js,jsx}'],
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
@@ -29,10 +29,11 @@ module.exports = {
           DEFAULT: 'hsl(var(--muted))',
           foreground: 'hsl(var(--muted-foreground))',
         },
-        accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))',
-        },
+        accent: '#AB8BFF',
+        // accent: {
+        //   DEFAULT: 'hsl(var(--accent))',
+        //   foreground: 'hsl(var(--accent-foreground))',
+        // },
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
@@ -40,6 +41,16 @@ module.exports = {
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
+        },
+        //custom colors
+        light: {
+          100: '#D6C7FF',
+          200: '#A8B5DB',
+          300: '#9CA4AB',
+        },
+        dark: {
+          100: '#221F3D',
+          200: '#0F0D23',
         },
       },
       borderRadius: {
@@ -66,6 +77,7 @@ module.exports = {
       },
     },
   },
+  safelist: ['flex-items-justify-center'],
   future: {
     hoverOnlyWhenSupported: true,
   },

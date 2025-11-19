@@ -1,8 +1,7 @@
 import { Tabs } from 'expo-router';
-import { ImageBackground, Image, Text, View } from 'react-native';
-
-import { icons } from '@/lib/constants/icons';
+import { ImageBackground, Text, View } from 'react-native';
 import { images } from '@/lib/constants/images';
+import { Heart, Home, Search, User } from 'lucide-react-native';
 
 function TabIcon({ focused, icon, title }: any) {
   if (focused) {
@@ -10,7 +9,7 @@ function TabIcon({ focused, icon, title }: any) {
       <ImageBackground
         source={images.highlight}
         className="mt-4 flex min-h-14 w-full min-w-[112px] flex-1 flex-row items-center justify-center overflow-hidden rounded-full">
-        <Image source={icon} tintColor="#151312" className="size-5" />
+        {icon}
         <Text className="ml-2 text-base font-semibold text-secondary">
           {title}
         </Text>
@@ -20,7 +19,7 @@ function TabIcon({ focused, icon, title }: any) {
 
   return (
     <View className="mt-4 size-full items-center justify-center rounded-full">
-      <Image source={icon} tintColor="#A8B5DB" className="size-5" />
+      {icon}
     </View>
   );
 }
@@ -51,43 +50,83 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'index',
+          title: 'Home',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.home} title="Home" />
+            <TabIcon
+              focused={focused}
+              icon={
+                <Home
+                  size={20}
+                  color={focused ? '#151312' : '#A8B5DB'}
+                  // fill={focused ? '#151312' : 'transparent'}
+                  strokeWidth={2}
+                />
+              }
+              title="Home"
+            />
           ),
         }}
       />
-
       <Tabs.Screen
         name="search"
         options={{
           title: 'Search',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.search} title="Search" />
+            <TabIcon
+              focused={focused}
+              icon={
+                <Search
+                  size={20}
+                  color={focused ? '#151312' : '#A8B5DB'}
+                  strokeWidth={2}
+                />
+              }
+              title="Search"
+            />
           ),
         }}
       />
-
       <Tabs.Screen
-        name="save"
+        name="favorite"
         options={{
-          title: 'Save',
+          title: 'Favorite',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.save} title="Save" />
+            <TabIcon
+              focused={focused}
+              icon={
+                <Heart
+                  size={20}
+                  color={focused ? '#151312' : '#A8B5DB'}
+                  // fill={focused ? '#151312' : 'transparent'}
+                  strokeWidth={2}
+                />
+              }
+              title="Favorite"
+            />
           ),
         }}
       />
-
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
           headerShown: false,
           tabBarIcon: ({ focused }) => (
-            <TabIcon focused={focused} icon={icons.person} title="Profile" />
+            <TabIcon
+              focused={focused}
+              icon={
+                <User
+                  size={20}
+                  color={focused ? '#151312' : '#A8B5DB'}
+                  // fill={focused ? '#151312' : 'transparent'}
+                  strokeWidth={2}
+                />
+              }
+              title="Profile"
+            />
           ),
         }}
       />

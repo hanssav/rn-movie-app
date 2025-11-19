@@ -16,5 +16,5 @@
     "app/_layout.tsx",
     "nativewind-env.d.ts",
     "types/**/*.d.ts"
-  ]
+, "lib/api/index.tss"  ]
 }

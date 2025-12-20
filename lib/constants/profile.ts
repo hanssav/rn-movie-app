@@ -21,9 +21,9 @@ export const getAvatarUrl = () => {
 };
 
 export const userStats = [
-  { label: 'Favorites', value: 0 },
-  { label: 'Watchlist', value: 0 },
-  { label: 'Reviews', value: 0 },
+  { label: 'Favorites', value: 12 },
+  { label: 'Watchlist', value: 10 },
+  { label: 'Reviews', value: 1 },
 ];
 
 export const accountInfo = (data: AccountDetailsResponse) => [

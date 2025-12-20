@@ -40,7 +40,7 @@ const Screen = () => {
     <>
       {/* EXAMPLE CUSTOM VARIABLES WITH MORE THAN ONE VALUE CSS .flex-items-justify-center : check in global.css for how to setting this variable   */}
       <View className="flex-all-center min-h-72 w-full gap-12">
-        <Image source={icons.logo} className="h-10 w-12" />
+        <icons.logo width={130} height={40} />
 
         <Input
           placeholder="Search through 300+ movies online"
